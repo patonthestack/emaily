@@ -12,5 +12,7 @@ app.get("/", (req, res) => {
 //res: Object representing the outgoing response
 //res.send: Immediately send some JSON back to who ever made this request
 
-app.listen(5000);
+const PORT = process.env.PORT || 5000;
+//whenever Heroku runs our app, it injects environment variables
+app.listen(PORT);
 // node is listening to port 5000 (express is telling node to watch for traffic)
