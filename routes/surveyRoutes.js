@@ -10,7 +10,7 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = mongoose.model("surveys");
 
 module.exports = app => {
-  app.get("api/surveys", requireLogin, async (req, res) => {
+  app.get("/api/surveys", requireLogin, async (req, res) => {
     const surveys = await Survey.find({ _user: req.user.id }).select({
       recipients: false
     });
@@ -18,12 +18,12 @@ module.exports = app => {
     res.send(surveys);
   });
 
-  app.get("api/surveys/:surveyId/:choice", (req, res) => {
+  app.get("/api/surveys/:surveyId/:choice", (req, res) => {
     res.send("Thanks for voting!");
   });
 
-  app.post("api/surveys/webhooks", (req, res) => {
-    const p = new Path("api/surveys/:surveyId/:choice");
+  app.post("/api/surveys/webhooks", (req, res) => {
+    const p = new Path("/api/surveys/:surveyId/:choice");
 
     _.chain(req.body)
       .map(({ email, url }) => {
@@ -54,7 +54,7 @@ module.exports = app => {
     res.send({});
   });
 
-  app.post("api/surveys", requireLogin, requireCredits, async (req, res) => {
+  app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
     const { title, subject, body, recipients } = req.body;
 
     const survey = new Survey({
